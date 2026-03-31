@@ -126,12 +126,4 @@ Both models are trained at startup on the integrated dataset
 
 ---
 
-## Team
 
-- Palak (22103055)
-- Yogita (22103118)
-- Abhishek Kumar Gupta (22103048)
-
-**Guided by:** Prof. Amandeep Kaur & Prof. Satnam Kaur  
-**Department of CSE, Punjab Engineering College (Deemed to be University)**  
-**February 2026**
