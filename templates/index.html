@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>MediSmart — Smart Medicine Recommendation</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+      </svg>
+    </div>
+    <span class="logo-name">Medi<span>Smart</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="#diagnose" class="active">Diagnose</a>
+    <a href="#how">How It Works</a>
+    <a href="#algorithms">Algorithms</a>
+    <a href="#admin">Admin</a>
+  </div>
+  <button class="nav-cta" onclick="startWizard()">Start Diagnosis</button>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      ML-Powered · 41 Diseases · 86 Symptoms
+    </div>
+    <h1>Smart <i>Medicine</i><br/>Recommendation System</h1>
+    <p class="hero-sub">Enter your symptoms, age, and gender. Our ML engine matches your symptom profile against 41 diseases and recommends medications with precautions — instantly.</p>
+    <button class="hero-start" onclick="startWizard()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      Begin Diagnosis
+    </button>
+  </section>
+
+  <!-- WIZARD -->
+  <div class="wizard-wrap" id="diagnose">
+
+    <!-- STEPPER -->
+    <div class="stepper" id="stepper">
+      <div class="stp">
+        <div class="stp-circle active" id="sc1">1</div>
+        <div class="stp-label active" id="sl1">Profile</div>
+      </div>
+      <div class="stp-line" id="line1"></div>
+      <div class="stp">
+        <div class="stp-circle" id="sc2">2</div>
+        <div class="stp-label" id="sl2">Symptoms</div>
+      </div>
+      <div class="stp-line" id="line2"></div>
+      <div class="stp">
+        <div class="stp-circle" id="sc3">3</div>
+        <div class="stp-label" id="sl3">Results</div>
+      </div>
+      <div class="stp-line" id="line3"></div>
+      <div class="stp">
+        <div class="stp-circle" id="sc4">4</div>
+        <div class="stp-label" id="sl4">Done</div>
+      </div>
+    </div>
+
+    <!-- STEP 1: PROFILE -->
+    <div class="wcard step-panel active" id="step1">
+      <div class="wcard-head">
+        <div class="wh-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="2" stroke-linecap="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div>
+          <div class="wh-title">Step 1 — Patient Profile</div>
+          <div class="wh-sub">Your demographic details help personalise the results</div>
+        </div>
+      </div>
+      <div class="wcard-body">
+        <div class="f-row2">
+          <div class="fg" style="margin-bottom:0">
+            <label class="fl">Age <span class="fl-req">*</span></label>
+            <input class="fi" type="number" id="age" placeholder="e.g. 25" min="1" max="120"/>
+          </div>
+          <div class="fg" style="margin-bottom:0">
+            <label class="fl">Gender <span class="fl-req">*</span></label>
+            <select class="fs" id="gender">
+              <option value="">Select gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Prefer not to say</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-top:20px;padding:14px;background:#f9fafb;border-radius:9px;border:1px solid var(--line)">
+          <div style="font-size:.75rem;font-weight:600;color:var(--ink-2);margin-bottom:8px;display:flex;align-items:center;gap:7px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="2" stroke-linecap="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            Dataset-Powered Matching
+          </div>
+          <div style="font-size:.77rem;color:var(--sub);line-height:1.65">This system uses real medical datasets covering <strong style="color:var(--ink)">41 diseases</strong>, <strong style="color:var(--ink)">86 symptoms</strong>, and severity-weighted matching to surface the most likely conditions.</div>
+        </div>
+      </div>
+      <div class="wcard-foot">
+        <span class="f-note">Step 1 of 4</span>
+        <button class="btn-next" onclick="goStep(2)">
+          Next: Select Symptoms
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 2: SYMPTOMS -->
+    <div class="wcard step-panel" id="step2">
+      <div class="wcard-head">
+        <div class="wh-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="2" stroke-linecap="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div>
+          <div class="wh-title">Step 2 — Symptom Selection</div>
+          <div class="wh-sub">Select all symptoms you are currently experiencing (86 available)</div>
+        </div>
+      </div>
+      <div class="wcard-body">
+        <div class="sym-top">
+          <span class="sym-heading">Symptoms <span class="fl-req">*</span></span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="sym-counter" id="symCount">0 selected</span>
+            <button class="sym-clear" onclick="clearSym()">Clear all</button>
+          </div>
+        </div>
+        <div class="sym-grid" id="symGrid"></div>
+      </div>
+      <div class="wcard-foot">
+        <button class="btn-back" onclick="goStep(1)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Back
+        </button>
+        <div style="display:flex;align-items:center;gap:14px">
+          <span class="f-note" id="symNote">Step 2 of 4</span>
+          <button class="btn-next" onclick="goStep(3)">
+            Get Recommendation
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: RESULTS -->
+    <div class="wcard step-panel" id="step3">
+      <div class="wcard-head">
+        <div class="wh-icon" style="background:#ecfdf5;border-color:#a7f3d0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="wh-title">Step 3 — Results</div>
+          <div class="wh-sub" id="resultMeta">Matching conditions with medications &amp; precautions</div>
+        </div>
+      </div>
+      <div class="wcard-body">
+        <div class="result-summary" id="resultSummary"></div>
+        <ul class="med-list" id="medList"></ul>
+        <div class="result-notice">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span>This is a <strong>clinical decision-support tool</strong> and does not replace professional medical advice. Always consult a licensed physician before taking any medication.</span>
+        </div>
+      </div>
+      <div class="wcard-foot">
+        <button class="btn-back" onclick="goStep(2)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Change Symptoms
+        </button>
+        <button class="btn-next" onclick="goStep(4)">
+          View Summary
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 4: DONE -->
+    <div class="wcard step-panel" id="step4">
+      <div class="wcard-body">
+        <div class="done-state">
+          <div class="done-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="2.2" stroke-linecap="round">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div class="done-title">Diagnosis Complete</div>
+          <p class="done-sub" id="doneSummary">Your personalised medicine recommendation has been generated.</p>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+            <button class="btn-restart" onclick="restartWizard()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/>
+              </svg>
+              Start New Diagnosis
+            </button>
+            <button onclick="goStep(3)" style="background:transparent;color:var(--teal);border:1.5px solid var(--teal-md);border-radius:var(--r-sm);padding:12px 24px;font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .15s">
+              ← View Results Again
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /wizard-wrap -->
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section" id="how">
+    <div class="sec-label">Process</div>
+    <div class="sec-title">How <i>MediSmart</i> Works</div>
+    <p class="sec-sub">A six-stage pipeline from raw patient input to a severity-weighted, dataset-driven recommendation.</p>
+    <div class="how-grid">
+      <div class="how-item">
+        <div class="how-num">1</div>
+        <div class="how-text">
+          <div class="how-t">Patient Input</div>
+          <div class="how-d">User provides age, gender, and selects currently experienced symptoms from 86 real clinical symptoms derived from the dataset.</div>
+        </div>
+      </div>
+      <div class="how-item">
+        <div class="how-num">2</div>
+        <div class="how-text">
+          <div class="how-t">Data Preprocessing</div>
+          <div class="how-d">Categorical variables are encoded (Male=0, Female=1), symptoms converted to binary feature vectors, and data normalised for model input.</div>
+        </div>
+      </div>
+      <div class="how-item">
+        <div class="how-num">3</div>
+        <div class="how-text">
+          <div class="how-t">Severity-Weighted Matching</div>
+          <div class="how-d">Each disease is scored by how many selected symptoms it matches, weighted by clinical severity scores from the Symptom-severity dataset.</div>
+        </div>
+      </div>
+      <div class="how-item">
+        <div class="how-num">4</div>
+        <div class="how-text">
+          <div class="how-t">ML Classification</div>
+          <div class="how-d">Decision Tree and Random Forest classifiers analyse the feature vector, identify symptom patterns, and predict the most appropriate disease class.</div>
+        </div>
+      </div>
+      <div class="how-item">
+        <div class="how-num">5</div>
+        <div class="how-text">
+          <div class="how-t">Full Recommendation Output</div>
+          <div class="how-d">Top 3 matched conditions are displayed with disease description, symptom match percentage, severity badge, medications, and step-by-step precautions.</div>
+        </div>
+      </div>
+      <div class="how-item">
+        <div class="how-num">6</div>
+        <div class="how-text">
+          <div class="how-t">Admin Dataset View</div>
+          <div class="how-d">Administrators can browse all 41 diseases with their symptoms and medications from the integrated dataset via the Admin dashboard.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALGORITHMS -->
+  <section class="algo-section" id="algorithms">
+    <div class="sec-label">Under the Hood</div>
+    <div class="sec-title">Supervised <i>ML Algorithms</i></div>
+    <p class="sec-sub" style="margin-bottom:24px">Two complementary classifiers trained, evaluated, and compared for accuracy and interpretability on the integrated dataset.</p>
+    <div class="algo-grid">
+      <div class="algo-card">
+        <div class="ac-ico">🌳</div>
+        <div class="ac-name">Decision Tree Classifier</div>
+        <div class="ac-sub">Entropy / Gini Index · High interpretability · Fast inference · Fully traceable decision path</div>
+        <div class="ac-mets">
+          <div class="ac-met"><div class="ac-met-v">~84%</div><div class="ac-met-k">Accuracy</div></div>
+          <div class="ac-met"><div class="ac-met-v">Fast</div><div class="ac-met-k">Training</div></div>
+          <div class="ac-met"><div class="ac-met-v">Low</div><div class="ac-met-k">Compute</div></div>
+        </div>
+      </div>
+      <div class="algo-card">
+        <div class="ac-ico">🌲</div>
+        <div class="ac-name">Random Forest Classifier</div>
+        <div class="ac-sub">Ensemble · Majority voting · Reduced overfitting · Feature importance scores</div>
+        <div class="ac-mets">
+          <div class="ac-met"><div class="ac-met-v">~88%</div><div class="ac-met-k">Accuracy</div></div>
+          <div class="ac-met"><div class="ac-met-v">Stable</div><div class="ac-met-k">Predictions</div></div>
+          <div class="ac-met"><div class="ac-met-v">Med</div><div class="ac-met-k">Compute</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADMIN -->
+  <section class="admin-section" id="admin">
+    <div class="sec-label">Administration</div>
+    <div class="sec-title">Dataset <i>Management</i></div>
+    <p class="sec-sub" style="margin-bottom:24px">Browse and manage the integrated disease dataset. All data loaded from the 5 CSV source files.</p>
+    <div class="admin-card">
+      <div class="admin-tabs-bar">
+        <button class="atab on" onclick="aTab('data',this)">Disease Dataset</button>
+        <button class="atab" onclick="aTab('stats',this)">Dataset Statistics</button>
+      </div>
+
+      <!-- Dataset Table -->
+      <div class="apanel on" id="ap-data">
+        <div style="overflow-x:auto">
+          <table class="dt">
+            <thead>
+              <tr>
+                <th>Disease</th>
+                <th>Symptoms</th>
+                <th>Medications (top 2)</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="dtBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="apanel" id="ap-stats">
+        <div class="stat-row">
+          <div class="stat-c">
+            <div class="stat-v t" id="dsCount">41</div>
+            <div class="stat-l">Diseases</div>
+          </div>
+          <div class="stat-c">
+            <div class="stat-v" id="symCountStat">86</div>
+            <div class="stat-l">Unique Symptoms</div>
+          </div>
+          <div class="stat-c">
+            <div class="stat-v">5</div>
+            <div class="stat-l">CSV Sources</div>
+          </div>
+        </div>
+        <div style="background:#f9fafb;border:1px solid var(--line);border-radius:10px;padding:18px">
+          <div style="font-size:.76rem;font-weight:700;color:var(--ink-2);margin-bottom:12px;letter-spacing:.02em">Integrated Dataset Sources</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:10px;font-size:.8rem;color:var(--sub)">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0"></span>
+              <strong style="color:var(--ink);min-width:160px">symtoms_df.csv</strong> Disease → Symptom mapping
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:.8rem;color:var(--sub)">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0"></span>
+              <strong style="color:var(--ink);min-width:160px">medications.csv</strong> Disease → Medication list
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:.8rem;color:var(--sub)">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0"></span>
+              <strong style="color:var(--ink);min-width:160px">description.csv</strong> Disease → Clinical description
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:.8rem;color:var(--sub)">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0"></span>
+              <strong style="color:var(--ink);min-width:160px">precautions_df.csv</strong> Disease → Precaution steps
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:.8rem;color:var(--sub)">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0"></span>
+              <strong style="color:var(--ink);min-width:160px">Symptom-severity.csv</strong> Symptom → Severity weight
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-brand">
+    <div class="f-dot">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round">
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+      </svg>
+    </div>
+    <span class="f-name">MediSmart</span>
+  </div>
+  <div class="f-copy">
+    41 Diseases · 86 Symptoms · 5 CSV Datasets · <strong>Decision Tree &amp; Random Forest</strong>
+  </div>
+  <div class="f-nav">
+    <a href="#diagnose">Diagnose</a>
+    <a href="#how">Process</a>
+    <a href="#algorithms">Algorithms</a>
+    <a href="#admin">Admin</a>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
